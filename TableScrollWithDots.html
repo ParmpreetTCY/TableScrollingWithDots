@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <style>
+        .wrapper {
+            scroll-behavior: smooth;
+            overflow-x: auto;
+            overflow-y: hidden;
+            /* height: 200px; */
+        }
+
+        .table {
+            width: 1000px;
+            border-collapse: collapse;
+        }
+
+        .table th,
+        .table td {
+            padding: 10px;
+            border: 1px solid black;
+        }
+
+        .scroll-indicator {
+            position: fixed;
+            top: 0;
+            z-index: 1;
+            width: 100%;
+            height: 6px;
+            background-color: #f1f1f1;
+        }
+
+        .scroll-indicator>div {
+            width: 1%;
+            height: 100%;
+            background-color: #4caf50;
+        }
+
+        .dot {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            margin: 10px;
+            cursor: pointer;
+            background-color: #cccc;
+        }
+
+        .dot.active {
+            background-color: #4caf50;
+        }
+    </style>
+
+    <div class="scroll-indicator">
+        <div></div>
+    </div>
+
+    <div class="wrapper">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Points</th>
+                </tr>
+            </thead>
+            <tbody id="table-body">
+                <tr id="row-1">
+                    <td>Jill</td>
+                    <td>Smith</td>
+                    <td>50</td>
+                </tr>
+                <tr id="row-2">
+                    <td>Eve</td>
+                    <td>Jackson</td>
+                    <td>94</td>
+                </tr>
+                <tr id="row-3">
+                    <td>Adam</td>
+                    <td>Johnson</td>
+                    <td>67</td>
+                </tr>
+                <tr id="row-4">
+                    <td>Bob</td>
+                    <td>Brown</td>
+                    <td>80</td>
+                </tr>
+                <tr id="row-5">
+                    <td>Alice</td>
+                    <td>Green</td>
+                    <td>75</td>
+                </tr>
+                <tr id="row-6">
+                    <td>David</td>
+                    <td>Miller</td>
+                    <td>88</td>
+                </tr>
+                <tr id="row-7">
+                    <td>Lisa</td>
+                    <td>Parker</td>
+                    <td>92</td>
+                </tr>
+                <tr id="row-8">
+                    <td>Tom</td>
+                    <td>Baker</td>
+                    <td>86</td>
+                </tr>
+
+                <!-- Add more rows as needed -->
+
+            </tbody>
+
+        </table>
+    </div>
+
+
+    <div class="dots">
+
+        <!-- Add dots as needed -->
+        <span class="dot active" onclick="scrollTableWrapper(0);" data-target="row-1"></span>
+        <span class="dot" onclick="scrollTableWrapper(1);" data-target="row-2"></span>
+        <span class="dot" onclick="scrollTableWrapper(2);" data-target="row-3"></span>
+
+    </div>
+
+
+    <script>
+        let currentSettWidth = 0;
+        let currentDot = 1;
+        const container =  document.querySelector(".wrapper");
+        const table = document.querySelector(".table");
+        const allDots =document.querySelectorAll(".dot");
+        const totalNOodDots = parseInt(allDots.length);
+        let widthtocalulatRightScrollPositin = 0;
+        let widthToAppltArray = [];
+        const tableWidth = table.scrollWidth;
+        const tableWidthToScroll = tableWidth/totalNOodDots;
+        const maxScroll = table.scrollWidth - container.offsetWidth;
+        let countofdots = 0;
+        allDots.forEach((element) => {
+            if(countofdots > 0){
+                widthtocalulatRightScrollPositin = widthtocalulatRightScrollPositin + tableWidthToScroll;
+            }
+            if(countofdots == (totalNOodDots - 1)){
+                widthtocalulatRightScrollPositin = maxScroll;
+            }
+            widthToAppltArray.push(widthtocalulatRightScrollPositin);
+            countofdots++;
+        })
+        const scrollTableWrapper = (dotNo) => {
+            var currentScroll = container.scrollLeft;
+            if (currentScroll >= Math.floor(widthToAppltArray[dotNo+1])) {
+                currentScroll = 0;
+            }
+            // Calculate the new scroll position
+            var newScroll = widthToAppltArray[dotNo];
+            // Limit the scroll position to the maximum value
+            if (newScroll > maxScroll) {
+                newScroll = maxScroll;
+            }
+            // Set the new scroll position
+            container.scrollLeft = newScroll;
+        }
+    </script>
+
+</body>
+
+</html>
