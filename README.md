@@ -1,7 +1,5 @@
 # TableScrollingWithDots
 Help you to scroll table form left to right by clicking on dot below as pagination.
-# TableScrollingWithDots
-Help you to scroll table form left to right by clicking on dot below as pagination.
 <p> Code to make table scrollable on click of dot using javascript. Create a table and dots div and add <code>scrollTableWrapper(0)</code> function to each dot with dot no passed as parameter </p>
 <code>
   <script>
